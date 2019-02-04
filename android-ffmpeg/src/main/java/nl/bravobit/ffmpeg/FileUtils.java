@@ -10,12 +10,11 @@ import java.io.InputStream;
 import java.io.OutputStream;
 
 class FileUtils {
-    private static final String FFMPEG_FILE_NAME = "ffmpeg";
+    private static final String FFMPEG_FILE_NAME = "lib_ffmpeg.so";
     private static final String FFPROBE_FILE_NAME = "ffprobe";
 
     static File getFFmpeg(Context context) {
-        File folder = context.getFilesDir();
-        return new File(folder, FFMPEG_FILE_NAME);
+        return new File(getLibDirectory(context), FFMPEG_FILE_NAME);
     }
 
     static File getFFprobe(Context context) {
@@ -40,5 +39,10 @@ class FileUtils {
             Log.e("error while writing ff binary file", e);
         }
         return false;
+    }
+
+    static File getLibDirectory(Context context) {
+        File dataDir = new File(context.getFilesDir().getParent());
+        return new File(dataDir.getAbsolutePath(), "lib");
     }
 }
